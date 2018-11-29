@@ -7,13 +7,6 @@ import sys
 import os
 import json
 
-print("xxx")
-headers = {"x-authenticated-scope": "newvoicemedia.com/api/interactionplan", "X-Consumer-Custom-ID": "1", "x-kong-request": "HrqlxQ2V6n9h20SVHeONHBrJtvc+UdquwzNZOV4d9tNusYHNMffswZWM//UfeCsNRTa72V6tbQMWJjb6f2OVGAxiFJZa9GWhDsR9XTZ5jvKpFPBduJTuR9grLoBrqwiAYgtMBmpMSrYSBI7dc39MZkNhtm6LwYAk5YkXxBPc074=", "accept": "application/vnd.newvoicemedia.v1+json"}
-connection = httplib.HTTPConnection('www.cmcardle75.co.uk:65432')
-connection.request('POST', '/invoke', json.dumps({"provider": "Nexmo","requests":[{"action": "dispatch","route": "1000","externalid": "demo1"}]}), headers)
-print(connection.getresponse())
-print("xxx")
-
 try:
     DEFAULT_SERVED_NCCO = sys.argv[1]
 except IndexError:
@@ -29,10 +22,11 @@ def get_ncco():
     if check_valid_json(RESULT_NCCO):
         jsonR = json.loads(RESULT_NCCO)
         print("xxx")
-        headers = {"""[{"key":"x-authenticated-scope","value":"newvoicemedia.com/api/interactionplan","description":""},{"key":"X-Consumer-Custom-ID","value":"1","description":""},{"key":"x-kong-request","value":"HrqlxQ2V6n9h20SVHeONHBrJtvc+UdquwzNZOV4d9tNusYHNMffswZWM//UfeCsNRTa72V6tbQMWJjb6f2OVGAxiFJZa9GWhDsR9XTZ5jvKpFPBduJTuR9grLoBrqwiAYgtMBmpMSrYSBI7dc39MZkNhtm6LwYAk5YkXxBPc074=","description":""},{"key":"accept","value":"application/vnd.newvoicemedia.v1+json","description":""}]"""}
+        headers = {"x-authenticated-scope": "newvoicemedia.com/api/interactionplan", "X-Consumer-Custom-ID": "1", "x-kong-request": "HrqlxQ2V6n9h20SVHeONHBrJtvc+UdquwzNZOV4d9tNusYHNMffswZWM//UfeCsNRTa72V6tbQMWJjb6f2OVGAxiFJZa9GWhDsR9XTZ5jvKpFPBduJTuR9grLoBrqwiAYgtMBmpMSrYSBI7dc39MZkNhtm6LwYAk5YkXxBPc074=", "accept": "application/vnd.newvoicemedia.v1+json"}
         connection = httplib.HTTPConnection('www.cmcardle75.co.uk:65432')
-        foo = {"""{"provider": "Nexmo","requests":[{"action": "dispatch","route": "1000","externalid": "demo1"}]}"""}
-        connection.request('POST', '/invoke', foo, headers)
+        connection.request('POST', '/invoke', json.dumps({"provider": "Nexmo","requests":[{"action": "dispatch","route": "1000","externalid": "demo1"}]}), headers)
+        print(connection.getresponse())
+        print("xxx")
     else:
         jsonR = json.load(open(os.path.join('./', RESULT_NCCO)))
     response.content_type = 'application/json'
